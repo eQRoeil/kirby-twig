@@ -22,6 +22,9 @@ use Twig_Error_Runtime;
  */
 class TwigRenderer
 {
+    /** @var Instance */
+    private static $instance = null;
+
     /** @var Twig_Environment */
     private $env;
 
@@ -116,7 +119,7 @@ class TwigRenderer
      * Prepare the Twig environment
      * @throws Twig_Error_Runtime
      */
-    public function __construct()
+    private function __construct()
     {
         $debug = C::get('debug', false);
         $kirby = kirby();
@@ -293,6 +296,19 @@ class TwigRenderer
             return $reflected->newInstanceArgs($args);
         }
         return new $name;
+    }
+
+    /**
+     * Singleton pattern
+     * get instance or create one if not already
+     * @return static
+     */
+    public static function getInstance()
+    {
+        if(is_null(self::$instance)) {
+            self::$instance = new TwigRenderer();
+        }
+        return self::$instance;
     }
 
 }

@@ -71,7 +71,7 @@ class TwigTemplate extends Template
 
         // load the template
         if (pathinfo($file, PATHINFO_EXTENSION) === 'twig') {
-            $twig = new TwigRenderer();
+            $twig = TwigRenderer::getInstance();
             $result = $twig->render($file, Tpl::$data, $return);
         } else {
             $result = Tpl::load($file, $data, $return);
